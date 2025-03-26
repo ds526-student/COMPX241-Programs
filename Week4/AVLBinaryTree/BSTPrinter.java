@@ -3,6 +3,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import HashTable.Node;
+
 public class BSTPrinter { // Changed from package-private to public
    BSTPrinter() {
    }

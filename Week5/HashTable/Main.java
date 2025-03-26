@@ -11,5 +11,7 @@ public class Main{
 
         hashTable.delete(1);
         hashTable.print();
+
+        
     }
 }

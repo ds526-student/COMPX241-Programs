@@ -1,4 +1,3 @@
-
 public class IntHashTable {
     Node[] hashTable;
     int size;

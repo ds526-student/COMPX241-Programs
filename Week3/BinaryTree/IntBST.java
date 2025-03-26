@@ -1,3 +1,5 @@
+import HashTable.Node;
+
 public class IntBST {
     Node root;
 
