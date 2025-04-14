@@ -45,6 +45,52 @@ public class IntAVL {
         return cRoot;
     }
 
+    public void delete(int n) {
+        root = deleteFromSubtree(n, root);
+    }
+
+    private Node deleteFromSubtree(int n, Node cRoot) {
+        if (cRoot == null) return null;
+
+        if (n < cRoot.value) {
+            cRoot.left = deleteFromSubtree(n, cRoot.left);
+        } else if (n > cRoot.value) {
+            cRoot.right = deleteFromSubtree(n, cRoot.right);
+        } else {
+            if (cRoot.left == null) return cRoot.right;
+            else if (cRoot.right == null) return cRoot.left;
+            else {
+                Node minNode = findMin(cRoot.right);
+                cRoot.value = minNode.value;
+                cRoot.right = deleteFromSubtree(minNode.value, cRoot.right);
+            }
+        }
+
+        int balance = getBalanceFactor(cRoot);
+        if (balance > 1) {
+            if (getBalanceFactor(cRoot.left) >= 0) {
+                return RotateRight(cRoot);
+            } else {
+                return RotateLeftRight(cRoot);
+            }
+        } else if (balance < -1) {
+            if (getBalanceFactor(cRoot.right) <= 0) {
+                return RotateLeft(cRoot);
+            } else {
+                return RotateRightLeft(cRoot);
+            }
+        }
+
+        return cRoot;
+    }
+
+    private Node findMin(Node cRoot) {
+        while (cRoot.left != null) {
+            cRoot = cRoot.left;
+        }
+        return cRoot;
+    }
+
     public boolean search(int n) {
         return searchSubtree(n, root);
     }
@@ -92,15 +138,16 @@ public class IntAVL {
 
     private int getHeightOfSubtree(Node cRoot) {
         if (cRoot == null) return 0;
+        return 1 + Math.max(getHeightOfSubtree(cRoot.left), getHeightOfSubtree(cRoot.right));
 
-        int leftHeight = getHeightOfSubtree(cRoot.left);
-        int rightHeight = getHeightOfSubtree(cRoot.right);
+        // int leftHeight = getHeightOfSubtree(cRoot.left);
+        // int rightHeight = getHeightOfSubtree(cRoot.right);
 
-        if (leftHeight > rightHeight) {
-            return leftHeight + 1;
-        } else {
-            return rightHeight + 1;
-        }
+        // if (leftHeight > rightHeight) {
+        //     return leftHeight + 1;
+        // } else {
+        //     return rightHeight + 1;
+        // }
     }
 
     public int BalanceFactor() {

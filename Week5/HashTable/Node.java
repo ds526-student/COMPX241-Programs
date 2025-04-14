@@ -2,8 +2,8 @@ public class Node {
     int k;
     int v;
 
-    public Node(int k, int v) {
-        this.k = k;
-        this.v = v;
+    public Node(int key, int value) {
+        k = key;
+        v = value;
     }  
 }

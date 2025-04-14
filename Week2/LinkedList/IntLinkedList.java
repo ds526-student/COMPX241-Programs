@@ -11,14 +11,14 @@ public class IntLinkedList {
     /**
      * Prints the values in the linked list to the console
      */
-    public void print() {
-        Node curr = head;
-        while (curr != null) {
-            System.out.print(curr.value + " -> ");
-            curr = curr.next;
-        }
-        System.out.println();
-    }
+    // public void print() {
+    //     Node curr = head;
+    //     while (curr != null) {
+    //         System.out.print(curr.value + " -> ");
+    //         curr = curr.next;
+    //     }
+    //     System.out.println();
+    // }
 
     /**
      * Adds a new value to the head of the linked list
@@ -94,14 +94,42 @@ public class IntLinkedList {
         curr.next = curr.next.next;
     }
 
-    public void insert(int n, int i){
-        Node newNode = new Node(n);
-        if (i == 0) {
-            newNode.next = head;
-            head = newNode;
-            return;
-        }
+    // public void insert(int n, int i){
+    //     Node newNode = new Node(n);
+    //     if (i == 0) {
+    //         newNode.next = head;
+    //         head = newNode;
+    //         return;
+    //     }
+    //     Node curr = head;
+    //     for (int j = 0; j < i - 1; j++) {
+    //         if (curr.next == null) {
+    //             return;
+    //         }
+    //         curr = curr.next;
+    //     }
+    //     newNode.next = curr.next;
+    //     curr.next = newNode;
+
+    // }
+
+    // Write a public method insert(x) that creates a new Node whose value has the same value as x and adds it to the start of the Queue.
+    public void insert(int x) {
+        Node newNode = new Node(x);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    // Write a public method print() that removes the head item from the Queue. 
+    public void print() {
+        Node temp = head;
+        head = head.next;
+        System.out.println("Removed: " + temp.value);
+    }
+
+    public void insertAt(int x, int i) {
         Node curr = head;
+        Node newNode = new Node(x);
         for (int j = 0; j < i - 1; j++) {
             if (curr.next == null) {
                 return;
@@ -110,7 +138,16 @@ public class IntLinkedList {
         }
         newNode.next = curr.next;
         curr.next = newNode;
-
+    }
+    // Write a public method getLength(x) that returns the length of the Queue.
+    public int getLength() {
+        int length = 0;
+        Node temp = head;
+        while (temp != null) {
+            length++;
+            temp = temp.next;
+        }
+        return length;
     }
 
 }

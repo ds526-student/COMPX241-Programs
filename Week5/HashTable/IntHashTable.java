@@ -1,5 +1,8 @@
+
+
 public class IntHashTable {
     Node[] hashTable;
+    
     int size, numFullEntries, numCollisions, numRehashes;
 
     public IntHashTable(int size) {
@@ -12,7 +15,7 @@ public class IntHashTable {
         size *= 2;
         hashTable = new Node[size];
 
-        for(int i = 0; i < temp.length; i++) {
+        for (int i = 0; i < temp.length; i++) {
             Node t = temp[i];
             insert(t.k, t.v);
             numFullEntries--;
@@ -24,49 +27,49 @@ public class IntHashTable {
     }
 
     public void insert(int k, int v) {
-        int index = getHash(k);
-        hashTable[index] = new Node(k, v);
+        Node newNode = new Node(k, v);
 
-        if (numFullEntries >= size) {
-            System.out.println("Rehashing required, current size: " + size);
+        if(numFullEntries >= size) {
             rehash();
             numRehashes++;
         }
 
-        // if (hashTable[index] == null) {
-        //     hashTable[index] = new Node(k, v);
-        //     numFullEntries++;
-        // } else {
-        //     System.out.println("Collision detected at index " + index + " for key " + k);
-        //     numCollisions++;
-        // }
+        /* old
+        if(hashTable[getHash(k)] == null) {
+            hashTable[getHash(k)] = newNode;
+            numFullEntries++;
+        } else {
+            System.out.println("Collision");
+            numCollisions++;
+        }
+            */
 
         int i = 0;
-        while(hashTable[(index + i) % size] != null) {
+        while(hashTable[(getHash(k) + i) % size] != null) {
             i++;
-
+            numCollisions++;
         }
-
-        hashTable[(index + i) % size] = new Node(k, v);
+        hashTable[(getHash(k) + i) % size] = newNode;
         numFullEntries++;
     }
 
     public void delete(int k) {
-        int index = getHash(k);
-        if (hashTable[index] != null && hashTable[index].k == k) {
-            hashTable[index] = null;
+        if(hashTable[getHash(k)] == null) {
+            return;
+        } else if(hashTable[getHash(k)].k == k) {
+            hashTable[getHash(k)] = null;
             numFullEntries--;
         } else {
-            System.out.println("Key " + k + " not found for deletion.");
+            System.out.println("Key not found!");
         }
     }
 
     public void print() {
         for (int i = 0; i < hashTable.length; i++) {
-            if (hashTable[i] != null) {
-                System.out.println("Key:Value -> " + hashTable[i].k + ":" + hashTable[i].v);
+            if(hashTable[i] == null) {
+                System.out.println("Key:Value -> null");
             } else {
-                System.out.println("Key:Value " + i + ": null");
+                System.out.println("Key:Value -> " + hashTable[i].k + ":" + hashTable[i].v);
             }
         }
     }
